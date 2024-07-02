@@ -117,7 +117,7 @@ https://github.com/openshift-cs/OpenShift-Troubleshooting-Templates/tree/master/
                name: "${NAME}-config"
      EOF
 
-oc create -f deployment.yaml
+     oc create -f deployment.yaml
      ```
 
    - Create Service
