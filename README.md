@@ -50,72 +50,72 @@ https://github.com/openshift-cs/OpenShift-Troubleshooting-Templates/tree/master/
          ${RESOURCE}        IN  A  ${IP_ADDRESS}
      EOF
 
-oc create -f configmap.yaml    
+     oc create -f configmap.yaml    
 
 
    - Create Deployment
 
      ```
-cat <<EOF > deployment.yaml
-kind: Deployment
-apiVersion: apps/v1
-metadata:
-  name: ${NAME}
-  labels:
-    app: ${NAME}
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: ${NAME}
-      deployment: ${NAME}
-  template:
-    metadata:
-      labels:
-        app: ${NAME}
-        deployment: ${NAME}
-    spec:
-      containers:
-      - name: ${NAME}
-        image: quay.io/openshift/origin-coredns:4.15
-        command:
-          - "/usr/bin/coredns"
-        args:
-          - "-dns.port"
-          - "8053"
-          - "-conf"
-          - "/etc/coredns/Corefile"
-        volumeMounts:
-          - mountPath: /etc/coredns
-            name: "${NAME}-config"
-        ports:
-          - containerPort: 8053
-        readinessProbe:
-          timeoutSeconds: 10
-          initialDelaySeconds: 10
-          httpGet:
-            path: "/health"
-            port: 8080
-            scheme: "HTTP"
-        livenessProbe:
-          timeoutSeconds: 10
-          initialDelaySeconds: 10
-          httpGet:
-            path: "/health"
-            port: 8080
-            scheme: "HTTP"
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "70Mi"
-          limits:
-            memory: "256Mi"
-      volumes:
-      - name: "${NAME}-config"
-        configMap:
-          defaultMode: 420
-          name: "${NAME}-config"
-EOF
+     cat <<EOF > deployment.yaml
+     kind: Deployment
+     apiVersion: apps/v1
+     metadata:
+       name: ${NAME}
+       labels:
+         app: ${NAME}
+     spec:
+       replicas: 1
+       selector:
+         matchLabels:
+           app: ${NAME}
+           deployment: ${NAME}
+       template:
+         metadata:
+           labels:
+             app: ${NAME}
+             deployment: ${NAME}
+         spec:
+           containers:
+           - name: ${NAME}
+             image: quay.io/openshift/origin-coredns:4.15
+             command:
+               - "/usr/bin/coredns"
+             args:
+               - "-dns.port"
+               - "8053"
+               - "-conf"
+               - "/etc/coredns/Corefile"
+             volumeMounts:
+               - mountPath: /etc/coredns
+                 name: "${NAME}-config"
+             ports:
+               - containerPort: 8053
+             readinessProbe:
+               timeoutSeconds: 10
+               initialDelaySeconds: 10
+               httpGet:
+                 path: "/health"
+                 port: 8080
+                 scheme: "HTTP"
+             livenessProbe:
+               timeoutSeconds: 10
+               initialDelaySeconds: 10
+               httpGet:
+                 path: "/health"
+                 port: 8080
+                 scheme: "HTTP"
+             resources:
+               requests:
+                 cpu: "100m"
+                 memory: "70Mi"
+               limits:
+                 memory: "256Mi"
+           volumes:
+           - name: "${NAME}-config"
+             configMap:
+               defaultMode: 420
+               name: "${NAME}-config"
+     EOF
 
 oc create -f deployment.yaml
      ```
@@ -123,29 +123,29 @@ oc create -f deployment.yaml
    - Create Service
 
      ```
-cat <<EOF > service.yaml
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: "${NAME}"
-  name: "${NAME}"
-spec:
-  ports:
-  - name: 53-tcp
-    port: 53
-    protocol: TCP
-    targetPort: 8053
-  - name: 53-udp
-    port: 53
-    protocol: UDP
-    targetPort: 8053
-  selector:
-    app: "${NAME}"
-    deployment: "${NAME}"
-EOF
+     cat <<EOF > service.yaml
+     apiVersion: v1
+     kind: Service
+     metadata:
+       labels:
+         app: "${NAME}"
+       name: "${NAME}"
+     spec:
+       ports:
+       - name: 53-tcp
+         port: 53
+         protocol: TCP
+         targetPort: 8053
+       - name: 53-udp
+         port: 53
+         protocol: UDP
+         targetPort: 8053
+       selector:
+         app: "${NAME}"
+         deployment: "${NAME}"
+     EOF
 
-oc create -f service.yaml
+     oc create -f service.yaml
      ``` 
 
 2. **Configure OpenShift DNS Operator Forwarding**
