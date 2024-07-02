@@ -165,18 +165,19 @@ https://github.com/openshift-cs/OpenShift-Troubleshooting-Templates/tree/master/
             ```$bash
             oc patch dns.operator default --type=json --patch="[{\"op\": \"add\", \"path\": \"/spec/servers/-1\", \"value\": {\"name\": \"upstream-dns\", \"zones\": [\"$FORWARD_DOMAIN\"], \"forwardPlugin\": {\"upstreams\": [\"$SERVICE_IP\"]}}}]"
             ```
-    3. Test  
-        - Connect to a random Pod and rosolve the EFS FQDN
 
-            ```$bash
-            #Connect to a Pod in the SDN and resolve the DNS FQDN
-            oc -n project-test rsh postgresql-1-fzlld
+2. **Test**
+    - Connect to a random Pod and rosolve the EFS FQDN
 
-            sh-4.4$ 
-            sh-4.4$ nslookup fs-df3e4fda.efs.us-west-2.amazonaws.com
-            Server:		172.30.0.10
-            Address:	172.30.0.10#53
+      ```$bash
+      #Connect to a Pod in the SDN and resolve the DNS FQDN
+      oc -n project-test rsh postgresql-1-fzlld
 
-            Name:	fs-df3e4fda.efs.us-west-2.amazonaws.com
-            Address: 30.3.3.3
-            ```
+      sh-4.4$ 
+      sh-4.4$ nslookup fs-df3e4fda.efs.us-west-2.amazonaws.com
+      Server:		172.30.0.10
+      Address:	172.30.0.10#53
+
+      Name:	fs-df3e4fda.efs.us-west-2.amazonaws.com
+      Address: 30.3.3.3
+      ```
