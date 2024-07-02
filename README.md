@@ -17,6 +17,12 @@ https://github.com/openshift-cs/OpenShift-Troubleshooting-Templates/tree/master/
      export IP_ADDRESS=30.3.3.3    # EFS Mount IP
      ```
 
+   - Create Namespace
+     
+     ```
+     oc new-project mycoredns
+     ```
+
    - Create ConfigMap
      
      ```
