@@ -20,35 +20,35 @@ https://github.com/openshift-cs/OpenShift-Troubleshooting-Templates/tree/master/
    - Create ConfigMap
      
      ```
-cat <<EOF > configmap.yaml
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: "${NAME}-config"
-  labels:
-    app: "${NAME}"
-data:
-  Corefile: |
-    ${DOMAIN}:8053 {
-        errors
-        health
-        file /etc/coredns/${DOMAIN}
-        cache 30
-        reload
-    }
-  ${DOMAIN}: |
-    \$TTL    1800
-    \$ORIGIN ${DOMAIN}.
+     cat <<EOF > configmap.yaml
+     kind: ConfigMap
+     apiVersion: v1
+     metadata:
+       name: "${NAME}-config"
+       labels:
+         app: "${NAME}"
+     data:
+       Corefile: |
+         ${DOMAIN}:8053 {
+             errors
+             health
+             file /etc/coredns/${DOMAIN}
+             cache 30
+             reload
+         }
+       ${DOMAIN}: |
+         \$TTL    1800
+         \$ORIGIN ${DOMAIN}.
 
-    @ IN SOA dns domains (
-        2020031101   ; serial
-        300          ; refresh
-        1800         ; retry
-        14400        ; expire
-        300 )        ; minimum
+         @ IN SOA dns domains (
+             2020031101   ; serial
+             300          ; refresh
+             1800         ; retry
+             14400        ; expire
+             300 )        ; minimum
 
-    ${RESOURCE}        IN  A  ${IP_ADDRESS}
-EOF
+         ${RESOURCE}        IN  A  ${IP_ADDRESS}
+     EOF
 
 oc create -f configmap.yaml    
 
