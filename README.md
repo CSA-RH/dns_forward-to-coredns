@@ -189,5 +189,5 @@ https://github.com/openshift-cs/OpenShift-Troubleshooting-Templates/tree/master/
       ```
 
 3. **Things to keep in mind about the solution described**
-  - Recreating or creating new EFS mount points will change the EFS IP.
-  - The customized DNS server must be deployed in each cluster.
+    - Recreating or creating new EFS mount points will change the EFS IP.
+    - The customized DNS server must be deployed in each cluster.
