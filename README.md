@@ -187,3 +187,7 @@ https://github.com/openshift-cs/OpenShift-Troubleshooting-Templates/tree/master/
       Name:	fs-df3e4fda.efs.us-west-2.amazonaws.com
       Address: 30.3.3.3
       ```
+
+3. **Things to keep in mind about the solution described**
+  - Recreating or creating new EFS mount points will change the EFS IP.
+  - The customized DNS server must be deployed in each cluster.
